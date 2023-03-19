@@ -21,7 +21,7 @@ with streamlit_analytics.track():
     left_column, right_column = st.columns(2)
 
     # add the header to the second column
-    with right_column:
+    with left_column:
         st.header("📰 News GPT")
         st.subheader("Stay informed, at a glance - Summarizing News With AI Powered bullet-points in real time with just one click.")
 
