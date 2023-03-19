@@ -86,7 +86,7 @@ with streamlit_analytics.track():
                     chunk_overlap  = 20
                 )
         texts = text_splitter.split_text(limited_text)
-        st.warning(len(texts))
+#         st.warning(len(texts))
 
 
         #openai 
