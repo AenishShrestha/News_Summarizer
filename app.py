@@ -14,6 +14,9 @@ import streamlit_analytics
 import markdown
 
 with streamlit_analytics.track():
+    # Set light theme
+    st.set_theme('light')
+
     # create two equal-width columns
     left_column, right_column = st.columns(2)
 
