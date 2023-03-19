@@ -1,0 +1,10 @@
+beautifulsoup4>=4.11.2
+langchain>=0.0.115
+Markdown>=3.4.1
+pandas>=1.2.5
+Pillow>=9.4.0
+requests>=2.28.2
+streamlit>=1.20.0
+streamlit_analytics>=0.4.1
+streamlit_pills>=0.3.0
+ultimate_sitemap_parser>=0.5
