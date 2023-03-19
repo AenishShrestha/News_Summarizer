@@ -31,7 +31,7 @@ with streamlit_analytics.track():
     """
     st.markdown(BADGES,unsafe_allow_html=True)
 
-    current_time = datetime.datetime.now()
+    current_time = datetime.datetime.now(pytz.timezone('Asia/Kathmandu'))
 
     st.subheader("Select One News Category Website: ")
     news = pills("", ["Nepal | Current","Nepal | National","International", "Sports"], ["❓", "📱","🔎","⚽"])
