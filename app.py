@@ -70,18 +70,23 @@ with streamlit_analytics.track():
 
         soup = BeautifulSoup(html, "html.parser")
         text = soup.get_text()
-
+        
+       
+        
 
     
         # Convert the text content to markdown
         markdown_text = markdown.markdown(text)
         text = markdown_text.replace('\n','')
-        text_bytes = text.encode("utf-8")
+         #slicing the characters
+        limited_text = text[500:5000]
+        text_bytes = limited_text.encode("utf-8")
         text_splitter = RecursiveCharacterTextSplitter( 
                     chunk_size = 800,
                     chunk_overlap  = 20
                 )
-        texts = text_splitter.split_text(text)
+        texts = text_splitter.split_text(limited_text)
+        st.warning(len(texts))
 
 
         #openai 
