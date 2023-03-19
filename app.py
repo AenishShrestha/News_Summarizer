@@ -14,7 +14,7 @@ import streamlit_analytics
 import markdown
 
 with streamlit_analytics.track():
-   st.set_page_config(page_title="GPTNews", page_icon="🤖", layout="wide")
+    st.set_page_config(page_title="GPTNews", page_icon="🤖", layout="wide")
 
     # create two equal-width columns
     left_column, right_column = st.columns(2)
