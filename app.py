@@ -16,7 +16,10 @@ import markdown
 
 with streamlit_analytics.track():
     st.set_page_config(page_title="GPTNews", page_icon="🤖", layout="wide")
-    st.markdown("[![Kathmandu Technician](https://s2.gifyu.com/images/kathmandutechnician.com.gif)](https://www.kathmandutechnician.com)")
+#     st.markdown("[![Kathmandu Technician](https://s2.gifyu.com/images/kathmandutechnician.com.gif)](https://www.kathmandutechnician.com)")
+    
+    sponsor = '<p style="text-align:left;"><a href="https://www.kathmandutechnician.com"><img src="https://s2.gifyu.com/images/kathmandutechnician.com.gif" alt="Kathmandu Technician" width=300 height=100%></a></p>'
+    st.markdown(sponsor, unsafe_allow_html = True)
 
     # create two equal-width columns
     left_column, right_column = st.columns(2)
