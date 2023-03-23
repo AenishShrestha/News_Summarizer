@@ -40,7 +40,7 @@ with streamlit_analytics.track():
     current_time = datetime.datetime.now(pytz.timezone('Asia/Kathmandu'))
 
     st.subheader("Select One News Category Website: ")
-    news = pills("", ["Nepal | Current","Nepal | National","International", "Sports"], ["❓", "📱","🔎","⚽"])
+    news = pills("", ["Nepal | Current","Nepal | National","International", "Sports","AI | GPT UPDATES"], ["❓", "📱","🔎","⚽","🤖"])
 
     # if news == "Kantipur":
     #      url='https://ekantipur.com/'
@@ -59,10 +59,13 @@ with streamlit_analytics.track():
         "Nepal | Current" : "https://www.hamropatro.com/news",
         "Nepal | National": "https://www.hamropatro.com/news/national",
         "International": "https://www.hamropatro.com/news/international",
-        "Sports": "https://www.hamropatro.com/news/sports"
+        "Sports": "https://www.hamropatro.com/news/sports",
+        "AI | GPT UPDATES":"https://www.futuretools.io/news"
     }
 
     url = url_mapping[news]
+
+    
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/111.0"
@@ -74,16 +77,21 @@ with streamlit_analytics.track():
 
         soup = BeautifulSoup(html, "html.parser")
         text = soup.get_text()
-        
+        with open("matches.txt", "w",encoding="utf-8") as f:
+            f.write(text)
        
         
-
-    
+      
         # Convert the text content to markdown
         markdown_text = markdown.markdown(text)
         text = markdown_text.replace('\n','')
          #slicing the characters
-        limited_text = text[500:5000]
+        if url == "https://www.futuretools.io/news":
+            limited_text = text[0:3000]
+            
+        else : 
+            limited_text = text[500:5000]
+        # limited_text = text[0:8000]
         text_bytes = limited_text.encode("utf-8")
         text_splitter = RecursiveCharacterTextSplitter( 
                     chunk_size = 800,
@@ -94,15 +102,27 @@ with streamlit_analytics.track():
 
 
         #openai 
-        OPENAI_API_KEY = st.secrets["OPEN_API_KEY"]
-
+        OPENAI_API_KEY =  st.secrets["OPEN_API_KEY"]
+        # Convert to desired format
+        time_in_desired_format = current_time.strftime("%d %b %Y, %H:%M:%S")
         embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-        prefix_messages = [
+
+        if url == "https://www.futuretools.io/news":
+            prefix_messages = [
+                {"role": "system", "content": "You are a helpful AI Website Explainer."},
+                {"role": "user", "content": f"Create long form summary.Give Me Summarizes based on last 3 days from todays date. Notice today's date = {time_in_desired_format}.Maintain the order of the article with sorting of descending with respect to today's date. Output as a markdown.Do you understand?"},
+                {"role": "assistant", "content": "Yes i understood.I will not break the character and consider today's date to give only 3 days "},]
+            
+            query = 'Create long form summary of last 3 days from todays date : {time_in_desired_format}. List the bulletpoints. Give the headline As "LATEST AI NEWS" in h1 tag .Also notice to provide results of last 3 days. Output as a markdown.Do not repeat yourself.'
+
+        else:
+           prefix_messages = [
             {"role": "system", "content": "You are a helpful AI Website Explainer."},
             {"role": "user", "content": "Create long form summary. Output as a markdown."},
             {"role": "assistant", "content": "Okay what is the name of website?"},]
+           query = 'Create long form summary. Only List the bulletpoints. Give the headline in h1 tag. Output as a markdown.Do not repeat yourself.'
 
-        query = 'Create long form summary. Only List the bulletpoints. Give the headline in h1 tag. Output as a markdown.Do not repeat yourself.'
+           
 
         with open("foo.pkl", 'wb') as f:
                 pickle.dump(embeddings, f)
@@ -120,7 +140,7 @@ with streamlit_analytics.track():
         result = result.replace("\n\n--","").replace("\n--","").strip()
 
         # Convert to desired format
-        time_in_desired_format = current_time.strftime("%d %b %Y, %H:%M:%S")
+        # time_in_desired_format = current_time.strftime("%d %b %Y, %H:%M:%S")
 
         # Display current date and time in desired format
         st.write('Current Date & Time:', time_in_desired_format)
