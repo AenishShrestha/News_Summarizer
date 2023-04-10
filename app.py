@@ -149,7 +149,6 @@ with streamlit_analytics.track():
             # Display current date and time in desired format
             st.write('Current Date & Time:', time_in_desired_format)
             st.markdown(result)
-            return result
         news()
         st.markdown("Made with ❤️ by [Aenish Shrestha](https://twitter.com/aenish_shrestha)")
         components.iframe("https://aenishshrestha.substack.com/embed",height=500)
