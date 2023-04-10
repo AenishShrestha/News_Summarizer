@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 import streamlit_analytics
 import markdown
 
-@st.cache(persist=True, allow_output_mutation=True)
+
 
 with streamlit_analytics.track():
     st.set_page_config(page_title="GPTNews", page_icon="🤖", layout="wide")
